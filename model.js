@@ -54,30 +54,25 @@ module.exports = {
         const properties = propPath.split('/');
 
         // === option 1
-		let code = 'delete data';
-		for (let property of properties) {
-			code += `['${property}']`;
-		}
+		// let code = 'delete data';
+		// for (let property of properties) {
+		// 	code += `['${property}']`;
+		// }
 
 		// console.log('delete code: ', code);
-        const result = eval(code);
+        // const result = eval(code);
         
         // === option 2
-		// let parent = data, child = data;
-		// let props = '';
-		// for (let property of properties) {
-		// 	props += `${property}/`;
-		// 	parent = child;
-		// 	child = child[property];
-		// 	if (!child) throw `Property ${props} doesn't exist`;
-        // }
-        
-        // delete parent[child];
+		let parent = data, child = data;
+		let props = '';
+		for (let property of properties) {
+			props += `${property}/`;
+			parent = child;
+			child = child[property];
+			if (!child) throw `Property ${props} doesn't exist`;
+		}
 
-        if (!result) {
-            console.log('Some error occurs');
-            throw 'Some error occurs';
-        }
+		delete parent[properties[properties.length - 1]];
 
         return await saveStudent(studentId, data);
     }

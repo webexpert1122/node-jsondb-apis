@@ -8,8 +8,8 @@ const { isExist } = require('./utils/fsutils')
 // remove db files
 isExist(`${DB_ROOT}/student1.json`)
   .then(res => res && isExist(`${DB_ROOT}/student1.json`))
-isExist(`${DB_ROOT}/student1.json`)
-  .then(res => res && isExist(`${DB_ROOT}/student1.json`))
+isExist(`${DB_ROOT}/student2.json`)
+  .then(res => res && isExist(`${DB_ROOT}/student2.json`))
 
 
 const port = (process.env.PORT = process.env.PORT || require('get-port-sync')())
