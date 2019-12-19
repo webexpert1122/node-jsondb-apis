@@ -1,20 +1,16 @@
 const tape = require('tape')
 const jsonist = require('jsonist')
 const fs = require('fs')
+
 const { DB_ROOT } = require('./config/database')
+const { isExist } = require('./utils/fsutils')
 
 // remove db files
-try {
-  fs.unlinkSync(`${DB_ROOT}/student1.json`)
-} catch (error) {
-  console.log(error);
-}
+isExist(`${DB_ROOT}/student1.json`)
+  .then(res => res && isExist(`${DB_ROOT}/student1.json`))
+isExist(`${DB_ROOT}/student1.json`)
+  .then(res => res && isExist(`${DB_ROOT}/student1.json`))
 
-try {
-  fs.unlinkSync(`${DB_ROOT}/student2.json`)
-} catch (error) {
-  console.log(error);
-}
 
 const port = (process.env.PORT = process.env.PORT || require('get-port-sync')())
 const endpoint = `http://localhost:${port}`

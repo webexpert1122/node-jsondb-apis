@@ -1,6 +1,8 @@
 const { DB_ROOT } = require("./config/database");
 const fs = require("fs");
 
+const { isExist, createFile } = require('./utils/fsutils')
+
 module.exports = {
 
     async setProperty(studentId, propPath, option) {
@@ -125,28 +127,3 @@ const saveStudent = (id, data) => new Promise(resolve => {
         });
 });
 
-
-// === generic file system functions
-/**
- * @name: isExist
- * @param path: file system path
- * @returns: return promise that resolve true on exist or false
- * @throws: this function doesn't throw any exception
- */
-const isExist = path => new Promise(resolve => {
-    fs.access(path, error => {
-        resolve(!error);
-    });
-});
-
-/**
- * @name: createFile
- * @param path: file system path
- * @returns: return promise that resolve true on exist or false
- * @throws: this function doesn't throw any exception
- */
-const createFile = path => new Promise(resolve => {
-    fs.writeFile(path, "{}", error => {
-        resolve(!error);
-    });
-});
