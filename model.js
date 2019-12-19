@@ -1,5 +1,4 @@
 const { DB_ROOT } = require("./config/database");
-const path = require("path");
 const fs = require("fs");
 
 module.exports = {
@@ -52,7 +51,7 @@ module.exports = {
         const data = await readStudent(studentId);
         const properties = propPath.split('/');
 
-        // option 1
+        // === option 1
 		let code = 'delete data';
 		for (let property of properties) {
 			code += `['${property}']`;
@@ -61,7 +60,7 @@ module.exports = {
 		// console.log('delete code: ', code);
         const result = eval(code);
         
-        // option 2
+        // === option 2
 		// let parent = data, child = data;
 		// let props = '';
 		// for (let property of properties) {
@@ -82,10 +81,18 @@ module.exports = {
     }
 }
 
+// check if the file for the given student id exists
 const isExistStudent = id => isExist(`${DB_ROOT}/${id}.json`);
 
+// create a new json file for the given student id
 const createStudent = id => createFile(`${DB_ROOT}/${id}.json`);
 
+/**
+ * @name: readStudent
+ * @param id: student id
+ * @returns: return student data stored in file in json format
+ * @throws: throws an exception if reading file failed
+ */
 const readStudent = id => new Promise((resolve, reject) => {
     fs.readFile(`${DB_ROOT}/${id}.json`, {}, (error, data) => {
         if (error){
@@ -98,6 +105,13 @@ const readStudent = id => new Promise((resolve, reject) => {
     });
 });
 
+/**
+ * @name: saveStudent
+ * @param id: student id
+ * @param data: student data
+ * @returns: return true if save succeeded
+ * @throws: throws an exception if saving file failed
+ */
 const saveStudent = (id, data) => new Promise(resolve => {
     fs.writeFile(`${DB_ROOT}/${id}.json`,
         JSON.stringify(data),
@@ -113,11 +127,10 @@ const saveStudent = (id, data) => new Promise(resolve => {
 
 
 // === generic file system functions
-
 /**
  * @name: isExist
  * @param path: file system path
- * @returns: return promise that reolve true on success or false on fail
+ * @returns: return promise that resolve true on exist or false
  * @throws: this function doesn't throw any exception
  */
 const isExist = path => new Promise(resolve => {
@@ -129,7 +142,7 @@ const isExist = path => new Promise(resolve => {
 /**
  * @name: createFile
  * @param path: file system path
- * @returns: return promise that reolve true on success or false on fail
+ * @returns: return promise that resolve true on exist or false
  * @throws: this function doesn't throw any exception
  */
 const createFile = path => new Promise(resolve => {
